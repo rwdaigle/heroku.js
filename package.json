@@ -1,0 +1,17 @@
+{
+  "name" : "heroku",
+  "description" : "Heroku API wrapper for Node.js",
+  "tags" : ["heroku", "api"],
+  "version" : "0.0.1",
+  "author" : "Ryan Daigle <ryan.daigle@gmail.com>",
+  "repository" : {
+    "type" : "git",
+    "url" : "git@github.com:rwdaigle/heroku.js.git"
+  },
+  "dependencies": {
+    "request": ">= 2.9.3"
+  },
+  "devDependencies": {
+    "mocha": "latest"
+  }
+}
