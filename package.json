@@ -12,6 +12,7 @@
     "request": ">= 2.9.3"
   },
   "devDependencies": {
-    "mocha": "latest"
+    "mocha": "latest",
+    "should": "latest"
   }
 }
