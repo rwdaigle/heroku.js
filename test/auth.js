@@ -10,7 +10,7 @@ describe('Heroku API', function() {
     
     it('should fail with a 401 response status and message for an invalid api token', function(done) {
       var mockSession = mock.unauthorizedRequests['/apps']();
-      unauthApi.apps(function(err, results) {
+      unauthApi.apps(function(err, apps) {
         should.exist(err);
         err.message.should.include('401');
         err.message.should.include('Access denied');
@@ -21,9 +21,9 @@ describe('Heroku API', function() {
     
     it('should succeed with a valid api token', function(done) {
       var mockSession = mock.authorizedRequests['/apps']();
-      api.apps(function(err, results) {
+      api.apps(function(err, apps) {
         should.not.exist(err);
-        should.exist(results);
+        should.exist(apps);
         mockSession.should.be.done;
         done();
       });
