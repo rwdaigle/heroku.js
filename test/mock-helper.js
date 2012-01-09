@@ -1,60 +1,12 @@
-var nock = require('nock');
+var nock = require('nock'),
+  fs = require('fs');
 
-exports.authorizedRequests = {
-  '/apps': function() {
-    return nock('https://api.heroku.com')
-      .matchHeader('Authorization', 'Basic OkdPT0RfVE9LRU4=')  // ':GOOD_TOKEN' in Base64/basic http auth
-      .get('/apps')
-      .reply(200,
-        [
-          {
-            "id": 000001,
-            "name": "example1",
-            "create_status": "complete",
-            "created_at": "2011/01/01 00:00:00 -0700",
-            "stack": "bamboo-ree-1.8.7",
-            "requested_stack": null,
-            "repo_migrate_status": "complete",
-            "slug_size": 1000000,
-            "repo_size": 1000000,
-            "dynos": 1,
-            "workers": 0
-          },
-          {
-            "id": 000002,
-            "name": "example2",
-            "create_status": "complete",
-            "created_at": "2011/01/01 00:00:00 -0700",
-            "stack": "bamboo-ree-1.8.7",
-            "requested_stack": null,
-            "repo_migrate_status": "complete",
-            "slug_size": 1000000,
-            "repo_size": 1000000,
-            "dynos": 1,
-            "workers": 0
-          }
-        ]);
-    },
-
-  '/apps/name': function() {
-    return nock('https://api.heroku.com')
-      .matchHeader('Authorization', 'Basic OkdPT0RfVE9LRU4=')
-      .get('/apps/name')
-      .reply(200,
-        {
-          "id": 000001,
-          "name": "example1",
-          "create_status": "complete",
-          "created_at": "2011/01/01 00:00:00 -0700",
-          "stack": "bamboo-ree-1.8.7",
-          "requested_stack": null,
-          "repo_migrate_status": "complete",
-          "slug_size": 1000000,
-          "repo_size": 1000000,
-          "dynos": 1,
-          "workers": 0
-        });
-  }
+exports.request = function(path, responseFile) {
+  var fixturePath = 'test/fixtures/';
+  return nock('https://api.heroku.com')
+    .matchHeader('Authorization', 'Basic OkdPT0RfVE9LRU4=')  // ':GOOD_TOKEN' in Base64/basic http auth
+    .get(path)
+    .reply(200, fs.readFileSync(fixturePath + responseFile, 'utf8'));
 }
 
 exports.unauthorizedRequest = function(path) {
