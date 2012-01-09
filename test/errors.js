@@ -32,9 +32,10 @@ describe('Heroku API requests', function() {
     api.app('name', helper.confirmError(412, 'Deprecated', mockSession, done));
   });
   
+  // TODO: Make this test use realistic failure call, i.e. createApp
   it('should fail with a 422 response status and message for invalid calls', function(done) {
-    var mockSession = mock.failedRequest('/apps/name', 422, 'Unprocessable entity');
-    api.app('name', helper.confirmError(422, 'Unprocessable entity', mockSession, done));
+    var mockSession = mock.failedRequest('/apps/name', 422, { "error": "Name must start with a letter and can only contain lowercase letters, numbers, and dashes" });
+    api.app('name', helper.confirmError(422, 'Name must start', mockSession, done));
   });
   
   it('should fail with a 423 response status and message for invalid calls', function(done) {
