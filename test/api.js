@@ -70,70 +70,117 @@ describe('Heroku API:', function() {
         done();
       });
     });
+
+    describe('with name specified', function() {
+
+      beforeEach(function() {
+        mock.post('/apps', { app: { name: 'name' } }, 'create-app.json');
+      });
+      
+      it('should not expose an error', function(done) {
+        api.createApp({ name: 'name' }, function(err, app) {
+          should.not.exist(err);
+          done();
+        });
+      });
+      
+      it('should respond with the application\'s details', function(done) {
+        api.createApp({ name: 'name' }, function(err, app) {
+          should.exist(app, 'Application details should not be null');
+          should.exist(app.name, 'Result does not appear to contain application data');
+          done();
+        });
+      });
+    });
+
+    describe('with stack specified', function() {
+
+      beforeEach(function() {
+        mock.post('/apps', { app: { stack: 'cedar' } }, 'create-app.json');
+      });
+      
+      it('should not expose an error', function(done) {
+        api.createApp({ stack: 'cedar' }, function(err, app) {
+          should.not.exist(err);
+          done();
+        });
+      });
+      
+      it('should respond with the application\'s details', function(done) {
+        api.createApp({ stack: 'cedar' }, function(err, app) {
+          should.exist(app, 'Application details should not be null');
+          should.exist(app.name, 'Result does not appear to contain application data');
+          done();
+        });
+      });
+    });
+
+    describe('with name and stack specified', function() {
+
+      beforeEach(function() {
+        mock.post('/apps', { app: { name: 'name', stack: 'cedar' } }, 'create-app.json');
+      });
+      
+      it('should not expose an error', function(done) {
+        api.createApp({ name: 'name', stack: 'cedar' }, function(err, app) {
+          should.not.exist(err);
+          done();
+        });
+      });
+      
+      it('should respond with the application\'s details', function(done) {
+        api.createApp({ name: 'name', stack: 'cedar' }, function(err, app) {
+          should.exist(app, 'Application details should not be null');
+          should.exist(app.name, 'Result does not appear to contain application data');
+          done();
+        });
+      });
+    });
   });
 
-  describe('POST /apps with name specified', function() {
+  describe('PUT /apps', function() {
 
-    beforeEach(function() {
-      mock.post('/apps', { app: { name: 'name' } }, 'create-app.json');
-    });
-    
-    it('should not expose an error', function(done) {
-      api.createApp({ name: 'name' }, function(err, app) {
-        should.not.exist(err);
-        done();
+    describe('to rename an application', function() {
+
+      beforeEach(function() {
+        mock.put('/apps/name', { app: { name: 'newname' }}, 'rename-app.json');
+      });
+      
+      it('should not expose an error', function(done) {
+        api.updateApp('name', { name: 'newname'}, function(err, body) {
+          should.not.exist(err);
+          done();
+        });
+      });
+      
+      it('should respond with the application\'s details', function(done) {
+        api.updateApp('name', { name: 'newname'}, function(err, body) {
+          should.exist(body, 'API response body should not be null');
+          should.exist(body.name, 'Result is not of the expected format');
+          done();
+        });
       });
     });
-    
-    it('should respond with the application\'s details', function(done) {
-      api.createApp({ name: 'name' }, function(err, app) {
-        should.exist(app, 'Application details should not be null');
-        should.exist(app.name, 'Result does not appear to contain application data');
-        done();
-      });
-    });
-  });
 
-  describe('POST /apps with stack specified', function() {
+    describe('to transfer an application', function() {
 
-    beforeEach(function() {
-      mock.post('/apps', { app: { stack: 'cedar' } }, 'create-app.json');
-    });
-    
-    it('should not expose an error', function(done) {
-      api.createApp({ stack: 'cedar' }, function(err, app) {
-        should.not.exist(err);
-        done();
+      beforeEach(function() {
+        mock.put('/apps/name', { app: { transfer_owner: 'newowner@heroku.com' }}, 'transfer-app.json');
       });
-    });
-    
-    it('should respond with the application\'s details', function(done) {
-      api.createApp({ stack: 'cedar' }, function(err, app) {
-        should.exist(app, 'Application details should not be null');
-        should.exist(app.name, 'Result does not appear to contain application data');
-        done();
+      
+      it('should not expose an error', function(done) {
+        api.updateApp('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
+          should.not.exist(err);
+          done();
+        });
       });
-    });
-  });
-
-  describe('POST /apps with name and stack specified', function() {
-
-    beforeEach(function() {
-      mock.post('/apps', { app: { name: 'name', stack: 'cedar' } }, 'create-app.json');
-    });
-    
-    it('should not expose an error', function(done) {
-      api.createApp({ name: 'name', stack: 'cedar' }, function(err, app) {
-        should.not.exist(err);
-        done();
-      });
-    });
-    
-    it('should respond with the application\'s details', function(done) {
-      api.createApp({ name: 'name', stack: 'cedar' }, function(err, app) {
-        should.exist(app, 'Application details should not be null');
-        should.exist(app.name, 'Result does not appear to contain application data');
-        done();
+      
+      it('should respond with the application\'s details', function(done) {
+        api.updateApp('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
+          should.exist(body, 'API response body should not be null');
+          should.exist(body.name, 'Result is not of the expected format');
+          done();
+        });
       });
     });
   });
