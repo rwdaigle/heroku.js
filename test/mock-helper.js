@@ -66,7 +66,7 @@ exports.unauthorizedRequest = function(path) {
 
 exports.failedRequest = function(path, responseStatus, body) {
   return nock('https://api.heroku.com')
-    .matchHeader('Authorization', 'Basic OkdPT0RfVE9LRU4=')
+    .matchHeader('Authorization', 'Basic OkdPT0RfVE9LRU4=')  // ':GOOD_TOKEN' in Base64/basic http auth
     .get(path)
     .reply(responseStatus, body);
 }
