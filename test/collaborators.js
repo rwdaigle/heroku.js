@@ -27,4 +27,46 @@ describe('Heroku API:', function() {
       });
     });
   });
+
+  describe('POST /apps/:name/collaborators', function() {
+
+    beforeEach(function() {
+      mock.post('/apps/name/collaborators', { collaborator: { email: 'collab%40heroku.com' } }, 'add-collaborator.json');
+    });
+    
+    it('should not expose an error', function(done) {
+      api.collaborators.add('name', 'collab@heroku.com', function(err, res) {
+        should.not.exist(err);
+        done();
+      });
+    });
+    
+    it('should get a list of all app collaborators', function(done) {
+      api.collaborators.add('name', 'collab@heroku.com', function(err, res) {
+        should.exist(res);
+        done();
+      });
+    });
+  });
+
+  describe('DELETE /apps/:name/collaborators/:email', function() {
+
+    beforeEach(function() {
+      mock.delete('/apps/name/collaborators/collab%40heroku.com', 'remove-collaborator.json');
+    });
+    
+    it('should not expose an error', function(done) {
+      api.collaborators.remove('name', 'collab@heroku.com', function(err, res) {
+        should.not.exist(err);
+        done();
+      });
+    });
+    
+    it('should get a list of all app collaborators', function(done) {
+      api.collaborators.remove('name', 'collab@heroku.com', function(err, res) {
+        should.exist(res);
+        done();
+      });
+    });
+  });
 });
