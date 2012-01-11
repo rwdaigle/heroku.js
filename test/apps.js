@@ -184,4 +184,46 @@ describe('Heroku API:', function() {
       });
     });
   });
+
+  describe('POST /apps/:name/server/maintenance', function() {
+
+    beforeEach(function() {
+      mock.post('/apps/name/server/maintenance', { maintenance_mode: 1 }, 'empty.json');
+    });
+    
+    it('should not expose an error', function(done) {
+      api.apps.maintenance('name', true, function(err, app) {
+        should.not.exist(err);
+        done();
+      });
+    });
+    
+    it('should respond with an empty body', function(done) {
+      api.apps.maintenance('name', true, function(err, body) {
+        should.exist(body);
+        done();
+      });
+    });
+  });
+
+  describe('DELETE /apps/:name', function() {
+
+    beforeEach(function() {
+      mock.delete('/apps/name', 'destroy-app.json');
+    });
+    
+    it('should not expose an error', function(done) {
+      api.apps.destroy('name', function(err, body) {
+        should.not.exist(err);
+        done();
+      });
+    });
+    
+    it('should respond with an empty body', function(done) {
+      api.apps.destroy('name', function(err, body) {
+        should.exist(body);
+        done();
+      });
+    });
+  });
 });
