@@ -35,14 +35,14 @@ describe('Heroku API:', function() {
     });
     
     it('should not expose an error', function(done) {
-      api.apps.get('name', function(err, app) {
+      api.app.get('name', function(err, app) {
         should.not.exist(err);
         done();
       });
     });
     
     it('should get the application\'s details', function(done) {
-      api.apps.get('name', function(err, app) {
+      api.app.get('name', function(err, app) {
         should.exist(app, 'Application details should not be null');
         should.exist(app.name, 'Result does not appear to contain application data');
         done();
@@ -57,14 +57,14 @@ describe('Heroku API:', function() {
     });
     
     it('should not expose an error', function(done) {
-      api.apps.create(function(err, app) {
+      api.app.create(function(err, app) {
         should.not.exist(err);
         done();
       });
     });
     
     it('should respond with the application\'s details', function(done) {
-      api.apps.create(function(err, app) {
+      api.app.create(function(err, app) {
         should.exist(app, 'Application details should not be null');
         should.exist(app.name, 'Result does not appear to contain application data');
         done();
@@ -78,14 +78,14 @@ describe('Heroku API:', function() {
       });
       
       it('should not expose an error', function(done) {
-        api.apps.create({ name: 'name' }, function(err, app) {
+        api.app.create({ name: 'name' }, function(err, app) {
           should.not.exist(err);
           done();
         });
       });
       
       it('should respond with the application\'s details', function(done) {
-        api.apps.create({ name: 'name' }, function(err, app) {
+        api.app.create({ name: 'name' }, function(err, app) {
           should.exist(app, 'Application details should not be null');
           should.exist(app.name, 'Result does not appear to contain application data');
           done();
@@ -100,14 +100,14 @@ describe('Heroku API:', function() {
       });
       
       it('should not expose an error', function(done) {
-        api.apps.create({ stack: 'cedar' }, function(err, app) {
+        api.app.create({ stack: 'cedar' }, function(err, app) {
           should.not.exist(err);
           done();
         });
       });
       
       it('should respond with the application\'s details', function(done) {
-        api.apps.create({ stack: 'cedar' }, function(err, app) {
+        api.app.create({ stack: 'cedar' }, function(err, app) {
           should.exist(app, 'Application details should not be null');
           should.exist(app.name, 'Result does not appear to contain application data');
           done();
@@ -122,14 +122,14 @@ describe('Heroku API:', function() {
       });
       
       it('should not expose an error', function(done) {
-        api.apps.create({ name: 'name', stack: 'cedar' }, function(err, app) {
+        api.app.create({ name: 'name', stack: 'cedar' }, function(err, app) {
           should.not.exist(err);
           done();
         });
       });
       
       it('should respond with the application\'s details', function(done) {
-        api.apps.create({ name: 'name', stack: 'cedar' }, function(err, app) {
+        api.app.create({ name: 'name', stack: 'cedar' }, function(err, app) {
           should.exist(app, 'Application details should not be null');
           should.exist(app.name, 'Result does not appear to contain application data');
           done();
@@ -147,14 +147,14 @@ describe('Heroku API:', function() {
       });
       
       it('should not expose an error', function(done) {
-        api.apps.update('name', { name: 'newname'}, function(err, body) {
+        api.app.update('name', { name: 'newname'}, function(err, body) {
           should.not.exist(err);
           done();
         });
       });
       
       it('should respond with the application\'s details', function(done) {
-        api.apps.update('name', { name: 'newname'}, function(err, body) {
+        api.app.update('name', { name: 'newname'}, function(err, body) {
           should.exist(body, 'API response body should not be null');
           should.exist(body.name, 'Result is not of the expected format');
           done();
@@ -169,14 +169,14 @@ describe('Heroku API:', function() {
       });
       
       it('should not expose an error', function(done) {
-        api.apps.update('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
+        api.app.update('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
           should.not.exist(err);
           done();
         });
       });
       
       it('should respond with the application\'s details', function(done) {
-        api.apps.update('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
+        api.app.update('name', { transfer_owner: 'newowner@heroku.com'}, function(err, body) {
           should.exist(body, 'API response body should not be null');
           should.exist(body.name, 'Result is not of the expected format');
           done();
@@ -192,14 +192,14 @@ describe('Heroku API:', function() {
     });
     
     it('should not expose an error', function(done) {
-      api.apps.maintenance('name', true, function(err, app) {
+      api.app.maintenance('name', true, function(err, app) {
         should.not.exist(err);
         done();
       });
     });
     
     it('should respond with an empty body', function(done) {
-      api.apps.maintenance('name', true, function(err, body) {
+      api.app.maintenance('name', true, function(err, body) {
         should.exist(body);
         done();
       });
@@ -213,14 +213,14 @@ describe('Heroku API:', function() {
     });
     
     it('should not expose an error', function(done) {
-      api.apps.destroy('name', function(err, body) {
+      api.app.destroy('name', function(err, body) {
         should.not.exist(err);
         done();
       });
     });
     
     it('should respond with an empty body', function(done) {
-      api.apps.destroy('name', function(err, body) {
+      api.app.destroy('name', function(err, body) {
         should.exist(body);
         done();
       });

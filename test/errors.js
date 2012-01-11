@@ -19,27 +19,27 @@ describe('Heroku API requests', function() {
   
   it('should fail with a 403 response status and message for unauthorized calls', function(done) {
     var mockSession = mock.failedRequest('/apps/name', 403, 'Forbidden');
-    api.apps.get('name', helper.confirmError(403, 'Forbidden', mockSession, done));
+    api.app.get('name', helper.confirmError(403, 'Forbidden', mockSession, done));
   });
   
   it('should fail with a 404 response status and message for invalid calls', function(done) {
     var mockSession = mock.failedRequest('/apps/name', 404, 'Not found');
-    api.apps.get('name', helper.confirmError(404, 'Not found', mockSession, done));
+    api.app.get('name', helper.confirmError(404, 'Not found', mockSession, done));
   });
   
   it('should fail with a 412 response status and message for deprecated calls', function(done) {
     var mockSession = mock.failedRequest('/apps/name', 412, 'Deprecated');
-    api.apps.get('name', helper.confirmError(412, 'Deprecated', mockSession, done));
+    api.app.get('name', helper.confirmError(412, 'Deprecated', mockSession, done));
   });
   
   // TODO: Make this test use realistic failure call, i.e. createApp
   it('should fail with a 422 response status and message for invalid calls', function(done) {
     var mockSession = mock.failedRequest('/apps/name', 422, { "error": "Name must start with a letter and can only contain lowercase letters, numbers, and dashes" });
-    api.apps.get('name', helper.confirmError(422, 'Name must start', mockSession, done));
+    api.app.get('name', helper.confirmError(422, 'Name must start', mockSession, done));
   });
   
   it('should fail with a 423 response status and message for invalid calls', function(done) {
     var mockSession = mock.failedRequest('/apps/name', 423, 'Locked');
-    api.apps.get('name', helper.confirmError(423, 'Locked', mockSession, done));
+    api.app.get('name', helper.confirmError(423, 'Locked', mockSession, done));
   });
 });
