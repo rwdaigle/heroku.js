@@ -31,7 +31,7 @@ describe('Heroku API:', function() {
   describe('PUT /apps/:name/config_vars', function() {
 
     beforeEach(function() {
-      mock.post('/apps/name/config_vars', { body: { NEW_VAR: 'value' } }, 'update-config-vars.json');
+      mock.put('/apps/name/config_vars', { NEW_VAR: 'value' }, 'add-config-vars.json');
     });
     
     it('should not expose an error', function(done) {
@@ -41,15 +41,13 @@ describe('Heroku API:', function() {
       });
     });
     
-    it('should update the app configuration and expose the current configuration');
-    // , function(done) {
-    //   api.config.add('name', { NEW_VAR: 'value' }, function(err, config) {
-    //     should.exist(config);
-    //     should.exist(config.RACK_ENV)
-    //     config.RACK_ENV.should.equal('production');
-    //     done();
-    //   });
-    // });
+    it('should update the app configuration and expose the current configuration', function(done) {
+      api.config.add('name', { NEW_VAR: 'value' }, function(err, config) {
+        should.exist(config);
+        config.RACK_ENV.should.equal('production');
+        done();
+      });
+    });
   });
 
   describe('DELETE /apps/:name/config_vars/:key', function() {
