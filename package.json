@@ -9,7 +9,8 @@
     "url" : "git@github.com:rwdaigle/heroku.js.git"
   },
   "dependencies": {
-    "request": ">= 2.9.3"
+    "request": ">= 2.9.3",
+    "hashish": "latest"
   },
   "devDependencies": {
     "mocha": "latest",
